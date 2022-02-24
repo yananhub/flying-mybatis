@@ -3,7 +3,10 @@ package tech.qianmi.flyingmybatis;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
 import tech.qianmi.flyingmybatis.book.Book;
 import tech.qianmi.flyingmybatis.book.BookMapper;
@@ -15,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
 @SpringBootTest
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan
 @Sql("/test-create-schema.sql")
 @Sql(scripts = "/test-drop-schema.sql", executionPhase = AFTER_TEST_METHOD)
 class BookMapperTest {

@@ -249,6 +249,7 @@ public class BaseMapperProvider implements ProviderMethodResolver {
         }
     }
 
+    // Just a workaround to get the parameter
     @SuppressWarnings("unchecked")
     private static <T> T getParam(Object paramMap, String key) {
         return ((Map<String, T>) paramMap).get(key);
