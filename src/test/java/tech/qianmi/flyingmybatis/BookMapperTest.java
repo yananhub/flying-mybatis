@@ -7,11 +7,14 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
+import tech.qianmi.flyingmybatis.automapper.AutoMapperProcessor;
 import tech.qianmi.flyingmybatis.book.Book;
 import tech.qianmi.flyingmybatis.book.BookMapper;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,6 +24,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan
+@Import(AutoMapperProcessor.class)
 @Sql("/test-create-schema.sql")
 @Sql(scripts = "/test-drop-schema.sql", executionPhase = AFTER_TEST_METHOD)
 class BookMapperTest {
@@ -52,7 +56,7 @@ class BookMapperTest {
 
     @Test
     void selectAll() {
-        List<Book> bookList = bookMapper.selectAll();
+        Collection<Book> bookList = bookMapper.selectAll();
 
         assertEquals(2, bookList.size());
     }
@@ -66,25 +70,25 @@ class BookMapperTest {
 
     @Test
     void selectAllById() {
-        List<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
+        Collection<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
 
         assertEquals(2, bookList.size());
     }
 
     @Test
     void selectAllByColumn() {
-        List<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
+        Collection<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
 
         assertEquals(1, bookList.size());
-        assertEquals("test_book_2", bookList.get(0).getName());
+        assertEquals("test_book_2", bookList.iterator().next().getName());
     }
 
     @Test
     void selectAllByName() {
-        List<Book> bookList = bookMapper.selectByName("%test_book_2%");
+        Collection<Book> bookList = bookMapper.selectByName("%test_book_2%");
 
         assertEquals(1, bookList.size());
-        assertEquals("test_book_2", bookList.get(0).getName());
+        assertEquals("test_book_2", bookList.iterator().next().getName());
     }
 
     @Test
@@ -94,7 +98,7 @@ class BookMapperTest {
         assertEquals(2, count);
     }
 
-    /*@Test
+    @Test
     void updateAll() {
         Book book3 = new Book(0L, "test_book_3", LocalDate.now());
         Book book4 = new Book(1L, "test_book_4", LocalDate.now());
@@ -116,7 +120,7 @@ class BookMapperTest {
         assertEquals(2, result);
         assertEquals("test_book_3", bookMapper.selectById(0L).getName());
         assertEquals("test_book_4", bookMapper.selectById(1L).getName());
-    }*/
+    }
 
     @Test
     void update() {

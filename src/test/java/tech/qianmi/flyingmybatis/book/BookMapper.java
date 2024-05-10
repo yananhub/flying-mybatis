@@ -2,9 +2,9 @@ package tech.qianmi.flyingmybatis.book;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import tech.qianmi.flyingmybatis.BaseMapper;
+import tech.qianmi.flyingmybatis.AutoMapper;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * The book mapper
@@ -13,8 +13,8 @@ import java.util.List;
  * @since 2021/4/5
  */
 @Mapper
-public interface BookMapper extends BaseMapper<Book, Long> {
+public interface BookMapper extends AutoMapper<Book, Long> {
 
-    List<Book> selectByName(@Param("name") String name);
+    Collection<Book> selectByName(@Param("name") String name);
 
 }

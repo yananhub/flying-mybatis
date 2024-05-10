@@ -28,18 +28,19 @@ final class MetaDataCache {
 
     private static final Logger LOG = LoggerFactory.getLogger(MetaDataCache.class);
 
-    private static ConcurrentMap<Class<?>, TableInfo> DATA_CACHE = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<Class<?>, TableInfo> DATA_CACHE = new ConcurrentHashMap<>();
+
+    static final String ENTITY_PLACEHOLDER = "@EP@";
 
     private MetaDataCache() {
         // Instantiation is not allowed
     }
 
-    public static TableInfo getTableInfo(Class<?> mapperType) {
+    static TableInfo getTableInfo(Class<?> mapperType) {
         return DATA_CACHE.computeIfAbsent(mapperType, MetaDataCache::getTableInfoFromType);
     }
 
     private static TableInfo getTableInfoFromType(Class<?> mapperType) {
-
         Class<?> beanClass = getBeanType(mapperType);
 
         TableInfo tableInfo = new TableInfo();
@@ -65,7 +66,7 @@ final class MetaDataCache {
                 columnInfo.setString(field.getType().isAssignableFrom(String.class));
 
                 baseColumns.add(columnInfo.getColumnName());
-                intoValues.add("#{entity." + columnInfo.getFieldName() + "}");
+                intoValues.add(String.format("#{%s.%s}", ENTITY_PLACEHOLDER, columnInfo.getFieldName()));
 
                 columnInfos.add(columnInfo);
             }
@@ -87,7 +88,7 @@ final class MetaDataCache {
 
         if (tableInfo.getKeyType() == PrimaryKey.KeyType.AUTO) {
             baseColumns.remove(tableInfo.getPrimaryKey());
-            intoValues.remove("#{entity." + tableInfo.getPrimaryKeyField() + "}");
+            intoValues.remove(String.format("#{%s.%s}", ENTITY_PLACEHOLDER, tableInfo.getPrimaryKeyField()));
         }
 
         tableInfo.setBaseColumns(String.join(", ", baseColumns));
