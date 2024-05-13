@@ -36,13 +36,21 @@ final class MybatisHelper {
 
     static void setFieldValue(Object entity, String fieldName, Object fieldValue) {
         Field field = ReflectionUtils.findField(entity.getClass(), fieldName);
-        ReflectionUtils.makeAccessible(field);
-        ReflectionUtils.setField(field, entity, fieldValue);
+        if (field != null) {
+            ReflectionUtils.makeAccessible(field);
+            ReflectionUtils.setField(field, entity, fieldValue);
+        } else {
+            throw new IllegalStateException("Could not set field [" + fieldName + "].");
+        }
     }
 
     static Object getFieldValue(Object entity, String fieldName) {
         Field field = ReflectionUtils.findField(entity.getClass(), fieldName);
-        ReflectionUtils.makeAccessible(field);
-        return ReflectionUtils.getField(field, entity);
+        if (field != null) {
+            ReflectionUtils.makeAccessible(field);
+            return ReflectionUtils.getField(field, entity);
+        } else {
+            throw new IllegalStateException("Could not get field [" + fieldName + "].");
+        }
     }
 }
