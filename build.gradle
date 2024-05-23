@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4'
-    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'tech.qianmi.flyingmybatis'
@@ -21,9 +19,9 @@ dependencies {
     implementation 'org.springframework:spring-tx:6.1.6'
     implementation 'org.slf4j:slf4j-api:2.0.12'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
     testRuntimeOnly 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    testRuntimeOnly 'org.hsqldb:hsqldb'
+    testRuntimeOnly 'org.hsqldb:hsqldb:2.7.2'
 }
 
 test {
