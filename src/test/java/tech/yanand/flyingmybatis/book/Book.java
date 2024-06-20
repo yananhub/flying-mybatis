@@ -1,7 +1,7 @@
-package tech.qianmi.flyingmybatis.book;
+package tech.yanand.flyingmybatis.book;
 
-import tech.qianmi.flyingmybatis.Column;
-import tech.qianmi.flyingmybatis.PrimaryKey;
+import tech.yanand.flyingmybatis.Column;
+import tech.yanand.flyingmybatis.PrimaryKey;
 
 import java.time.LocalDate;
 

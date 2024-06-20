@@ -1,13 +1,14 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
-import tech.qianmi.flyingmybatis.PrimaryKey.KeyType;
+import tech.yanand.flyingmybatis.PrimaryKey.KeyType;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,15 +16,12 @@ import java.util.stream.IntStream;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 import static java.util.UUID.randomUUID;
-import static tech.qianmi.flyingmybatis.automapper.MetaDataCache.ENTITY_PLACEHOLDER;
-import static tech.qianmi.flyingmybatis.automapper.MybatisHelper.getFieldValue;
-import static tech.qianmi.flyingmybatis.automapper.MybatisHelper.setFieldValue;
+import static tech.yanand.flyingmybatis.MetaDataCache.ENTITY_PLACEHOLDER;
 
 /**
- * The core CRUD provider implementation
+ * The core CRUD provider implementation.
  *
- * @author yanan.zhang
- * @since 2021/2/18
+ * @author Richard Zhang
  */
 public class AutoMapperProvider implements ProviderMethodResolver {
 
@@ -45,7 +43,7 @@ public class AutoMapperProvider implements ProviderMethodResolver {
 
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         if (tableInfo.getKeyType() == KeyType.UUID)
-            setFieldValue(entity, tableInfo.getPrimaryKeyField(), randomUUID().toString());
+            MybatisHelper.setFieldValue(entity, tableInfo.getPrimaryKeyField(), randomUUID().toString());
 
         return new SQL().INSERT_INTO(tableInfo.getTableName())
                 .INTO_COLUMNS(tableInfo.getBaseColumns())
@@ -58,7 +56,7 @@ public class AutoMapperProvider implements ProviderMethodResolver {
 
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         if (tableInfo.getKeyType() == KeyType.UUID)
-            entities.forEach(entity -> setFieldValue(entity, tableInfo.getPrimaryKeyField(), randomUUID().toString()));
+            entities.forEach(entity -> MybatisHelper.setFieldValue(entity, tableInfo.getPrimaryKeyField(), randomUUID().toString()));
 
         return new SQL().INSERT_INTO(tableInfo.getTableName())
                 .INTO_COLUMNS(tableInfo.getBaseColumns())
@@ -93,6 +91,8 @@ public class AutoMapperProvider implements ProviderMethodResolver {
 
     public static String selectAllByColumn(@Param("column") String column, @Param("value") Object value,
                                            ProviderContext context) {
+        requireNonNull(value);
+
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         return new SQL()
                 .SELECT("*")
@@ -157,10 +157,10 @@ public class AutoMapperProvider implements ProviderMethodResolver {
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
 
         requireNonNull(finalEntity, ENTITY_IS_NULL);
-        requireNonNull(getFieldValue(finalEntity, tableInfo.getPrimaryKeyField()),
+        Objects.requireNonNull(MybatisHelper.getFieldValue(finalEntity, tableInfo.getPrimaryKeyField()),
                 "Updated entity ID is null");
 
-        return buildUpdateSql(tableInfo, columnInfo -> nonNull(getFieldValue(finalEntity, columnInfo.getFieldName())));
+        return buildUpdateSql(tableInfo, columnInfo -> nonNull(MybatisHelper.getFieldValue(finalEntity, columnInfo.getFieldName())));
     }
 
     private static String buildUpdateSql(TableInfo tableInfo, Predicate<ColumnInfo> selective) {

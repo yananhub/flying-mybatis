@@ -1,12 +1,12 @@
-package tech.qianmi.flyingmybatis;
+package tech.yanand.flyingmybatis;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-import tech.qianmi.flyingmybatis.book.Book;
-import tech.qianmi.flyingmybatis.book.BookMapper;
+import tech.yanand.flyingmybatis.book.Book;
+import tech.yanand.flyingmybatis.book.BookMapper;
 
 import java.time.LocalDate;
 import java.util.Collection;

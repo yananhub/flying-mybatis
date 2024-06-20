@@ -1,13 +1,11 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
+
+import tech.yanand.flyingmybatis.PrimaryKey.KeyType;
 
 import java.util.List;
-import tech.qianmi.flyingmybatis.PrimaryKey.KeyType;
 
 /**
  * Information after converting object into database table information.
- *
- * @author yanan.zhang
- * @since 2021/2/18
  */
 class TableInfo {
 

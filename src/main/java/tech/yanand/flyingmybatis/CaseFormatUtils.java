@@ -1,10 +1,7 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
 
 /**
  * Case format utilities
- *
- * @author yanan.zhang
- * @since 2021/2/18
  */
 final class CaseFormatUtils {
 

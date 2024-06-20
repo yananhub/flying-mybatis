@@ -1,4 +1,4 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
 
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -6,11 +6,10 @@ import org.apache.ibatis.session.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
-import tech.qianmi.flyingmybatis.PrimaryKey;
 
 import java.lang.reflect.Field;
 
-final class MybatisHelper {
+class MybatisHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(MybatisHelper.class);
 

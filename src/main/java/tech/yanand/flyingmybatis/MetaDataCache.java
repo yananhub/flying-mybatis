@@ -1,10 +1,7 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.qianmi.flyingmybatis.Column;
-import tech.qianmi.flyingmybatis.PrimaryKey;
-import tech.qianmi.flyingmybatis.Table;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -19,10 +16,7 @@ import static java.util.Objects.nonNull;
 
 
 /**
- * The meta data cache for DB table information, used for dynamic SQL mapper generation
- *
- * @author yanan.zhang
- * @since 2021/2/18
+ * The metadata cache for DB table information, used for dynamic SQL mapper generation
  */
 final class MetaDataCache {
 

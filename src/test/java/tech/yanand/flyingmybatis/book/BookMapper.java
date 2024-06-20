@@ -1,8 +1,8 @@
-package tech.qianmi.flyingmybatis.book;
+package tech.yanand.flyingmybatis.book;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import tech.qianmi.flyingmybatis.AutoMapper;
+import tech.yanand.flyingmybatis.AutoMapper;
 
 import java.util.Collection;
 

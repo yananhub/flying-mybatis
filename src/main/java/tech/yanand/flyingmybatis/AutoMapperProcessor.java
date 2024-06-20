@@ -1,17 +1,15 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
 
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import tech.qianmi.flyingmybatis.AutoMapper;
 
 import java.util.Arrays;
 
 /**
  * Process the mapping between the primary key and the entity field
  *
- * @author yanan.zhang
- * @since 2021/2/18
+ * @author Richard Zhang
  */
 public class AutoMapperProcessor implements BeanPostProcessor {
 

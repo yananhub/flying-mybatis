@@ -1,13 +1,12 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'tech.yanand.gradle.maven-central-publish' version '0.1.0-beta.4'
 }
 
-group = 'tech.qianmi.flyingmybatis'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '21'
-}
+group = 'tech.yanand'
+version = '0.1.0-beta'
 
 repositories {
     mavenCentral()
@@ -16,14 +15,92 @@ repositories {
 dependencies {
     implementation 'org.mybatis:mybatis:3.5.16'
     implementation 'org.mybatis:mybatis-spring:3.0.3'
-    implementation 'org.springframework:spring-tx:6.1.6'
-    implementation 'org.slf4j:slf4j-api:2.0.12'
+    implementation 'org.springframework:spring-tx:6.1.8'
+    implementation 'org.slf4j:slf4j-api:2.0.13'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.6'
     testRuntimeOnly 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    testRuntimeOnly 'org.hsqldb:hsqldb:2.7.2'
+    testRuntimeOnly 'org.hsqldb:hsqldb:2.7.3'
+}
+
+java {
+    sourceCompatibility = '17'
+    withJavadocJar()
+    withSourcesJar()
 }
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+
+            pom {
+                name = 'Flying Mybatis'
+                description = 'Let Mybatis fly, provide some basic CRUD methods by simply inheriting `AutoMapper`, ' +
+                        'without losing any of the original Mybatis Spring functionally.'
+                url = 'https://github.com/yananhub/flying-mybatis'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'yananhub'
+                        name = 'Richard Zhang'
+                        email = 'yanandwy@163.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/yananhub/flying-mybatis.git'
+                    developerConnection = 'scm:git:https://github.com/yananhub/flying-mybatis.git'
+                    url = 'https://github.com/yananhub/flying-mybatis'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "Local"
+            url = layout.buildDirectory.dir('repos/bundles')
+        }
+    }
+}
+
+signing {
+    if (System.getenv('SIGNING_KEY')) {
+        def signingKey = System.getenv('SIGNING_KEY').replace('\\n', '\n')
+        def signingPassword = System.getenv('SIGNING_PASSWORD')
+        useInMemoryPgpKeys(signingKey, signingPassword)
+
+        sign publishing.publications.mavenJava
+    }
+}
+
+javadoc {
+    source = fileTree('src/main/java') {
+        exclude 'tech/yanand/flyingmybatis/AutoMapperProvider.java'
+    }
+    options.addBooleanOption('html5', true)
+}
+
+mavenCentral {
+    repoDir = layout.buildDirectory.dir('repos/bundles')
+    authToken = System.getenv('MAVEN_UPLOAD_TOKEN')
 }

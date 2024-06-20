@@ -1,31 +1,30 @@
-# Flying Mybatis
+# 福来 Mybatis
 
-**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+**其他语言版本: [English](README.md), [中文](README_zh.md).**
 
-Let Mybatis fly, provide some basic CRUD methods by simply inheriting `AutoMapper`, without losing any of the original
-Mybatis Spring functionally.
+让 Mybatis 飞起来，通过简单继承 AutoMapper 提供一些基本的增删改查方法，同时不失去任何原始的 Mybatis Spring 功能。
 
-Use steps:
+使用步骤：
 
-Add the jar package dependency, using gradle as an example:
+添加 jar 包依赖，以 gradle 为例：
 
 ```groovy
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter:x.y.z'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:x.y.z'
-    implementation 'tech.yanand:flying-mybatis:x.y.z'   // Flying Mybatis jar
+    implementation 'tech.yanand:flying-mybatis:x.y.z'   // 福来 Mybatis jar
 }
 ```
 
-Add configuration in `application.properties` to turn on the camel case conversion, which is required:
+在 `application.properties` 中增加配置，以开启驼峰命名转换功能，这是必须的：
 
 ```properties
 mybatis.configuration.map-underscore-to-camel-case=true
-# XML mapper can be turned on if needed, but it is not necessary
+# 如果需要可以开启 XML mapper，但这不是必须的
 mybatis.mapper-locations=classpath:mapper/*.xml
 ```
 
-Add a Spring configuration class to your project:
+在项目中增 Spring 加配置类：
 
 ```java
 @Configuration
@@ -34,8 +33,7 @@ class AutoMapperConfig {
 }
 ```
 
-Create a new entity class that maps the tables and columns of the DB using `@Table` and `@Column` annotations.
-Take the `Book` entity as an example:
+新建实体类，使用 `@Table` 和 `@Column` 注解映射数据库的表和列。以 `Book` 实体为例：
 
 ```java
 public class Book {
@@ -52,19 +50,18 @@ public class Book {
 }
 ```
 
-Define the `BookMapper` interface, which extends from the `AutoMapper` interface.
-It will derive basic methods of adding, deleting, modifying, selecting, and their functionality.
+定义 `BookMapper` 接口，使它继承自 `AutoMapper` 接口, 它将拥有基本的增删改查方法和功能。
 
 ```java
 @Mapper
 public interface BookMapper extends AutoMapper<Book, Long> {
 
-    // Custom methods that define SQL in XML Mapper.
+    // 自定义方法，它可以在 XML Mapper 中定义 SQL。
     Collection<Book> selectByName(@Param("name") String name);
 }
 ```
 
-Use the `BookMapper`:
+使用 `BookMapper`：
 
 ```java
 @Autowired

@@ -1,4 +1,4 @@
-package tech.qianmi.flyingmybatis;
+package tech.yanand.flyingmybatis;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,8 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Mark the Domain object as a database table.
  *
- * @author yanan.zhang
- * @since 2021/2/18
+ * @author Richard Zhang
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -19,6 +18,8 @@ public @interface Table {
 
     /**
      * The name of the database table.
+     *
+     * @return The table name.
      */
     String value();
 }

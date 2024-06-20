@@ -1,10 +1,7 @@
-package tech.qianmi.flyingmybatis.automapper;
+package tech.yanand.flyingmybatis;
 
 /**
  * IInformation after converting an object field to database column information.
- *
- * @author yanan.zhang
- * @since 2021/2/18
  */
 class ColumnInfo {
 
