@@ -27,7 +27,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Publish to Local and GitHub Packages
+      - name: Publish to Local
         run: ./gradlew publish
         env:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}

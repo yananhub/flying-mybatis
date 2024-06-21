@@ -1,6 +1,6 @@
-# 福来 Mybatis
-
 **其他语言版本: [English](README.md), [中文](README_zh.md).**
+
+# 福来 Mybatis
 
 让 Mybatis 飞起来，通过简单继承 AutoMapper 提供一些基本的增删改查方法，同时不失去任何原始的 Mybatis Spring 功能。
 

@@ -1,6 +1,6 @@
-# Flying Mybatis
-
 **Read this in other languages: [English](README.md), [中文](README_zh.md).**
+
+# Flying Mybatis
 
 Let Mybatis fly, provide some basic CRUD methods by simply inheriting `AutoMapper`, without losing any of the original
 Mybatis Spring functionally.
