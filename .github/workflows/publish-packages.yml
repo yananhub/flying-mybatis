@@ -27,13 +27,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Publish to Local
-        run: ./gradlew publish
+      - name: Publish to Maven Central Portal
+        run: ./gradlew publish publishToMavenCentralPortal
         env:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-
-      - name: Upload to Maven Central Portal
-        run: ./gradlew publishToMavenCentralPortal
-        env:
           MAVEN_UPLOAD_TOKEN: ${{ secrets.MAVEN_UPLOAD_TOKEN }}
