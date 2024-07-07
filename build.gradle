@@ -2,11 +2,11 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'tech.yanand.maven-central-publish' version '1.1.0'
+    id 'tech.yanand.maven-central-publish' version '1.1.1'
 }
 
 group = 'tech.yanand'
-version = '1.0.0'
+version = '1.0.1'
 
 repositories {
     mavenCentral()
