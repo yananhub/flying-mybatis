@@ -10,7 +10,6 @@
 
 ```groovy
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter:x.y.z'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:x.y.z'
     implementation 'tech.yanand:flying-mybatis:x.y.z'   // 福来 Mybatis jar
 }
