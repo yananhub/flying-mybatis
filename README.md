@@ -37,6 +37,7 @@ Create a new entity class that maps the tables and columns of the DB using `@Tab
 Take the `Book` entity as an example:
 
 ```java
+@Table
 public class Book {
 
     @Column
@@ -70,22 +71,22 @@ Use the `BookMapper`:
 private BookMapper bookMapper;
 
 void testBookMapper() {
-    int result =                bookMapper.insertAll(List.of(book1, book2));
-    int result =                bookMapper.insert(book3);
+    int result =          bookMapper.insertAll(List.of(book1, book2));
+    int result =          bookMapper.insert(book3);
     
-    Collection<Book> bookList = bookMapper.selectAll();
-    Book book =                 bookMapper.selectById(1L);
-    Collection<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
-    Collection<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
-    long count =                bookMapper.countAll();
+    List<Book> bookList = bookMapper.selectAll();
+    Book book =           bookMapper.selectById(1L);
+    List<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
+    List<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
+    long count =          bookMapper.countAll();
 
-    int result =                bookMapper.updateAll(List.of(book3, book4));
-    int result =                bookMapper.updateAllSelective(List.of(book3, book4));
-    int result =                bookMapper.update(book3);
-    int result =                bookMapper.updateSelective(book3);
+    int result =          bookMapper.updateAll(List.of(book3, book4));
+    int result =          bookMapper.updateAllSelective(List.of(book3, book4));
+    int result =          bookMapper.update(book3);
+    int result =          bookMapper.updateSelective(book3);
 
-    int result =                bookMapper.deleteById(1L);
-    int result =                bookMapper.deleteAllById(List.of(0L, 1L));
-                                bookMapper.deleteAll();
+    int result =          bookMapper.deleteById(1L);
+    int result =          bookMapper.deleteAllById(List.of(0L, 1L));
+                          bookMapper.deleteAll();
 }
 ```

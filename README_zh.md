@@ -35,6 +35,7 @@ class AutoMapperConfig {
 新建实体类，使用 `@Table` 和 `@Column` 注解映射数据库的表和列。以 `Book` 实体为例：
 
 ```java
+@Table
 public class Book {
 
     @Column
@@ -67,22 +68,22 @@ public interface BookMapper extends AutoMapper<Book, Long> {
 private BookMapper bookMapper;
 
 void testBookMapper() {
-    int result =                bookMapper.insertAll(List.of(book1, book2));
-    int result =                bookMapper.insert(book3);
-    
-    Collection<Book> bookList = bookMapper.selectAll();
-    Book book =                 bookMapper.selectById(1L);
-    Collection<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
-    Collection<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
-    long count =                bookMapper.countAll();
+    int result =          bookMapper.insertAll(List.of(book1, book2));
+    int result =          bookMapper.insert(book3);
 
-    int result =                bookMapper.updateAll(List.of(book3, book4));
-    int result =                bookMapper.updateAllSelective(List.of(book3, book4));
-    int result =                bookMapper.update(book3);
-    int result =                bookMapper.updateSelective(book3);
+    List<Book> bookList = bookMapper.selectAll();
+    Book book =           bookMapper.selectById(1L);
+    List<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
+    List<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
+    long count =          bookMapper.countAll();
 
-    int result =                bookMapper.deleteById(1L);
-    int result =                bookMapper.deleteAllById(List.of(0L, 1L));
-                                bookMapper.deleteAll();
+    int result =          bookMapper.updateAll(List.of(book3, book4));
+    int result =          bookMapper.updateAllSelective(List.of(book3, book4));
+    int result =          bookMapper.update(book3);
+    int result =          bookMapper.updateSelective(book3);
+
+    int result =          bookMapper.deleteById(1L);
+    int result =          bookMapper.deleteAllById(List.of(0L, 1L));
+    bookMapper.deleteAll();
 }
 ```

@@ -47,7 +47,7 @@ class BookMapperTest {
 
     @Test
     void selectAll() {
-        Collection<Book> bookList = bookMapper.selectAll();
+        List<Book> bookList = bookMapper.selectAll();
 
         assertEquals(2, bookList.size());
     }
@@ -61,14 +61,14 @@ class BookMapperTest {
 
     @Test
     void selectAllById() {
-        Collection<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
+        List<Book> bookList = bookMapper.selectAllById(List.of(1L, 0L));
 
         assertEquals(2, bookList.size());
     }
 
     @Test
     void selectAllByColumn() {
-        Collection<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
+        List<Book> bookList = bookMapper.selectAllByColumn("name", "test_book_2");
 
         assertEquals(1, bookList.size());
         assertEquals("test_book_2", bookList.iterator().next().getName());

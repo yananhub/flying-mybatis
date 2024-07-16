@@ -23,6 +23,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * The auto mapper, inherit this interface to get some basic CRUD methods.
@@ -67,7 +68,7 @@ public interface AutoMapper<E, K> {
      * @return Selected entities.
      */
     @SelectProvider(AutoMapperProvider.class)
-    Collection<E> selectAllById(@Param("ids") Collection<K> ids);
+    List<E> selectAllById(@Param("ids") Collection<K> ids);
 
     /**
      * Select entities by a column.
@@ -77,7 +78,7 @@ public interface AutoMapper<E, K> {
      * @return Selected entities.
      */
     @SelectProvider(AutoMapperProvider.class)
-    Collection<E> selectAllByColumn(@Param("column") String column, @Param("value") Object value);
+    List<E> selectAllByColumn(@Param("column") String column, @Param("value") Object value);
 
     /**
      * Select all entities.
@@ -85,7 +86,7 @@ public interface AutoMapper<E, K> {
      * @return Selected entities.
      */
     @SelectProvider(AutoMapperProvider.class)
-    Collection<E> selectAll();
+    List<E> selectAll();
 
     /**
      * Count all entities.
@@ -114,7 +115,7 @@ public interface AutoMapper<E, K> {
     int deleteAllById(@Param("ids") Collection<K> ids);
 
     /**
-     * Delete all entities.
+     * Delete all entities using the SQL {@code truncate table <table_name>}.
      */
     @DeleteProvider(AutoMapperProvider.class)
     void deleteAll();
