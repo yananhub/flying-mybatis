@@ -18,6 +18,8 @@ package tech.yanand.flyingmybatis;
 
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.parsing.XNode;
+import org.apache.ibatis.parsing.XPathParser;
 import org.apache.ibatis.session.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,8 @@ import java.lang.reflect.Field;
 class MybatisHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(MybatisHelper.class);
+
+    private static final String ALL_COLUMN_SQL_XML = "<sql id=\"All_Column_List\">%s</sql>";
 
     private MybatisHelper() {
         // Instantiation is not allowed
@@ -47,6 +51,14 @@ class MybatisHelper {
         if (tableInfo.getKeyType() == PrimaryKey.KeyType.AUTO) {
             setFieldValue(mappedStatement, "keyGenerator", Jdbc3KeyGenerator.INSTANCE);
         }
+    }
+
+    static void addAllColumnsSql(Configuration configuration, Class<?> mapperInterface) {
+        TableInfo tableInfo = MetaDataCache.getTableInfo(mapperInterface);
+        XPathParser parser = new XPathParser(ALL_COLUMN_SQL_XML.formatted(tableInfo.getAllColumns()));
+        XNode sqlNode = parser.evalNode("/sql");
+        String fragmentId = mapperInterface.getName() + ".All_Column_List";
+        configuration.getSqlFragments().put(fragmentId, sqlNode);
     }
 
     static void setFieldValue(Object entity, String fieldName, Object fieldValue) {

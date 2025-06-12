@@ -16,6 +16,7 @@
 
 package tech.yanand.flyingmybatis;
 
+import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -36,18 +37,17 @@ public class AutoMapperProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof MapperFactoryBean<?> factoryBean) {
-            modifyKeyInfo(factoryBean, INSERT);
-            modifyKeyInfo(factoryBean, INSERT_ALL);
+            Class<?> mapperInterface = factoryBean.getMapperInterface();
+            Configuration configuration = factoryBean.getSqlSession().getConfiguration();
+
+            MybatisHelper.addAllColumnsSql(configuration, mapperInterface);
+
+            if (isAutoMapperBased(mapperInterface)) {
+                MybatisHelper.setMappedStatementKeys(configuration, mapperInterface, INSERT);
+                MybatisHelper.setMappedStatementKeys(configuration, mapperInterface, INSERT_ALL);
+            }
         }
         return bean;
-    }
-
-    private void modifyKeyInfo(MapperFactoryBean<?> factoryBean, String methodName) {
-        Class<?> mapperInterface = factoryBean.getMapperInterface();
-
-        if (isAutoMapperBased(mapperInterface))
-            MybatisHelper.setMappedStatementKeys(factoryBean.getSqlSession().getConfiguration(),
-                    mapperInterface, methodName);
     }
 
     private boolean isAutoMapperBased(Class<?> mapperInterface) {

@@ -88,7 +88,7 @@ public class AutoMapperProvider implements ProviderMethodResolver {
 
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         return new SQL()
-                .SELECT("*")
+                .SELECT(tableInfo.getAllColumns())
                 .FROM(tableInfo.getTableName())
                 .WHERE(String.format(WHERE_COLUMN_EQUALS, tableInfo.getPrimaryKey(), "id"))
                 .toString();
@@ -99,7 +99,7 @@ public class AutoMapperProvider implements ProviderMethodResolver {
 
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         return new SQL()
-                .SELECT("*")
+                .SELECT(tableInfo.getAllColumns())
                 .FROM(tableInfo.getTableName())
                 .WHERE(String.format(WHERE_ID_IN, tableInfo.getPrimaryKey(), getIdIn(ids)))
                 .toString();
@@ -111,7 +111,7 @@ public class AutoMapperProvider implements ProviderMethodResolver {
 
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         return new SQL()
-                .SELECT("*")
+                .SELECT(tableInfo.getAllColumns())
                 .FROM(tableInfo.getTableName())
                 .WHERE(String.format(WHERE_COLUMN_EQUALS, column, "value"))
                 .toString();
@@ -120,7 +120,7 @@ public class AutoMapperProvider implements ProviderMethodResolver {
     public static String selectAll(ProviderContext context) {
         TableInfo tableInfo = MetaDataCache.getTableInfo(context.getMapperType());
         return new SQL()
-                .SELECT("*")
+                .SELECT(tableInfo.getAllColumns())
                 .FROM(tableInfo.getTableName())
                 .toString();
     }

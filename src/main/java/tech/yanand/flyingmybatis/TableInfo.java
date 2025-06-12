@@ -112,4 +112,8 @@ class TableInfo {
     public void setIntoValues(String intoValues) {
         this.intoValues = intoValues;
     }
+
+    public String getAllColumns() {
+        return keyType == KeyType.AUTO ? primaryKey + ", " + baseColumns : baseColumns;
+    }
 }

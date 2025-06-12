@@ -3,7 +3,8 @@
 <mapper namespace="tech.yanand.flyingmybatis.book.BookMapper">
 
     <select id="selectByName" resultType="tech.yanand.flyingmybatis.book.Book">
-        select * from book where name like #{name}
+        select <include refid="All_Column_List" />
+        from book where name like #{name}
     </select>
 
 </mapper>
